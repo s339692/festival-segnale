@@ -6,9 +6,9 @@
   --colore-primario: #1a4f7a;
   --colore-primario-scuro: #0f3250;
   --colore-sfondo: #f5f2e9;
-  --colore-testo: #202923;
-  --font-testo: Arial, Helvetica, sans-serif;
-  --font-titoli: Georgia, "Times New Roman", serif;
+  --colore-testo: #23201E;
+  --font-testo: "Plus Jakarta Sans", Helvetica, sans-serif;
+  --font-titoli: "Plus Jakarta Sans", "Times New Roman", serif;
 }
 
 * {
@@ -44,6 +44,10 @@ a:focus-visible {
 }
 
 .site-header {
+  position:sticky;
+  top: 0;
+   z-index: 1000;
+  background-color: var(--colore-sfondo, #f7f8f5);
   padding: 1.25rem 0;
   border-bottom: 4px solid var(--colore-primario);
 }
@@ -84,7 +88,7 @@ nav a[aria-current="page"] {
 
 .eyebrow,
 .event-meta {
-  color: #46564b;
+  color: #595959;
   font-size: 0.875rem;
   font-weight: bold;
 }
@@ -220,5 +224,17 @@ h3 {
 @media (min-width: 1024px) {
   .event-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .site-header {
+    padding: 0.75rem 0; /* Compatta l'altezza dell'header sticky sul telefono */
+  }
+
+  .site-header nav {
+    display: flex;
+    flex-direction: column; /* Mette i link in colonna uno sotto l'altro */
+    align-items: flex-start; /* Li allinea a sinistra sotto il logo */
+    gap: 0.5rem; /* Spazio verticale comodo per il tocco */
   }
 }
