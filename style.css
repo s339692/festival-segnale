@@ -226,15 +226,4 @@ h3 {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-@media (max-width: 600px) {
-  .site-header {
-    padding: 0.75rem 0; /* Compatta l'altezza dell'header sticky sul telefono */
-  }
 
-  .site-header nav {
-    display: flex;
-    flex-direction: column; /* Mette i link in colonna uno sotto l'altro */
-    align-items: flex-start; /* Li allinea a sinistra sotto il logo */
-    gap: 0.5rem; /* Spazio verticale comodo per il tocco */
-  }
-}

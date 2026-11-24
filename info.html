@@ -268,6 +268,20 @@
         <li><strong>Cortile Comune (Sede di Mirafiori):</strong> la grande corte all'aperto ideale per i percorsi guidati e le collezioni di manifesti.</li>
       </ul>
     </section>
+        <section class="content-section" aria-labelledby="titolo-meteo">
+      <h2 id="titolo-meteo">Meteo a Torino adesso</h2>
+      <p class="reading-text">
+        Condizioni meteorologiche rilevate in tempo reale a Torino (si tratta del meteo di oggi, non delle previsioni per le date del festival).
+      </p>
+
+      <div id="box-meteo" role="status" aria-live="polite">
+        <p>Caricamento dati meteo in corso...</p>
+      </div>
+
+      <p class="event-place">
+        Dati meteo: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>, licenza CC BY 4.0.
+      </p>
+    </section>
   </main>
 
   <footer class="site-footer"><div class="container"><p>Segnale · Progetto didattico · Festival immaginario</p></div></footer>
@@ -287,6 +301,40 @@
         prevEl: '.swiper-button-prev',
       },
     });
+  </script>
+    <script>
+    async function caricaMeteoTorino() {
+      const boxMeteo = document.getElementById('box-meteo');
+      const urlApi = 'https://api.open-meteo.com/v1/forecast?latitude=45.0703&longitude=7.6869&current=temperature_2m,wind_speed_10m&timezone=Europe%2FRome';
+
+      try {
+        const risposta = await fetch(urlApi);
+
+        if (!risposta.ok) {
+          throw new Error('Risposta non valida dal servizio meteo.');
+        }
+
+        const dati = await risposta.json();
+        const attuale = dati.current;
+        const unita = dati.current_units;
+
+        // Estrae solo l'orario (es. "12:30") dalla stringa "2026-11-24T12:30"
+        const oraRilevazione = attuale.time.split('T')[1];
+
+        boxMeteo.innerHTML = `
+          <ul class="venues">
+            <li><strong>Temperatura:</strong> ${attuale.temperature_2m} ${unita.temperature_2m}</li>
+            <li><strong>Vento:</strong> ${attuale.wind_speed_10m} ${unita.wind_speed_10m}</li>
+            <li><strong>Ora del dato:</strong> ${oraRilevazione}</li>
+          </ul>
+        `;
+      } catch (errore) {
+        console.error(errore);
+        boxMeteo.innerHTML = '<p>Dati meteo momentaneamente non disponibili.</p>';
+      }
+    }
+
+    caricaMeteoTorino();
   </script>
 </body>
 </html>
